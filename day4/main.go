@@ -34,15 +34,12 @@ func (c Card) Wins() int {
 			count++
 		}
 	}
-	if count == 0 {
-		return 0
-	}
 	return count
 }
 
 func (c Card) Points() int {
 	wins := c.Wins()
-	return int(math.Pow(2.0, float64(wins)-1.0))
+	return int(math.Pow(2.0, float64(wins)-1.0)) // int(1/2) = 0
 }
 
 func parseInput(line string) Card {
@@ -99,7 +96,6 @@ func main() {
 
 	ans1 := 0
 	ans2 := 0
-
 	copies := make(map[int]int)
 	for _, line := range lines {
 		card := parseInput(line)
@@ -113,7 +109,6 @@ func main() {
 		}
 		ans2 += copies[card.ID]
 	}
-
 	fmt.Println(ans1)
 	fmt.Println(ans2)
 	return
