@@ -101,22 +101,17 @@ func main() {
 	ans2 := 0
 
 	copies := make(map[int]int)
-	for k, _ := range lines {
-		copies[k+1] = 1
-	}
 	for _, line := range lines {
 		card := parseInput(line)
 		points := card.Points()
 		ans1 += points
 
+		copies[card.ID] += 1
 		wins := card.Wins()
 		for k := 1; k <= wins; k++ {
 			copies[card.ID+k] += 1 * copies[card.ID]
 		}
-	}
-
-	for _, v := range copies {
-		ans2 += v
+		ans2 += copies[card.ID]
 	}
 
 	fmt.Println(ans1)
