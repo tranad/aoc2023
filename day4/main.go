@@ -110,10 +110,8 @@ func main() {
 		ans1 += points
 
 		wins := card.Wins()
-		for i := 1; i <= copies[card.ID]; i++ {
-			for k := 1; k <= wins; k++ {
-				copies[card.ID+k] += 1
-			}
+		for k := 1; k <= wins; k++ {
+			copies[card.ID+k] += 1 * copies[card.ID]
 		}
 	}
 
