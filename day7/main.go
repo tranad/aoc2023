@@ -61,6 +61,22 @@ func (ch CamelCardsHand) Type2() (string, int) {
 	}
 	// suppose J is an entry
 	_, J_in_hist := handHist["J"]
+
+        // Add J count to highest non-J count. Which is just the following
+        // which is long because idk how to do that in Go. Something like?
+        //
+        // wcHandHist = make(map[string]int)
+        // highestNonJ := ""
+        // cnt := 0
+        // for k,v := range handHist {
+        //     if k != "J" && v > cnt {
+        //         cnt = v
+        //         highestNonJ = k
+        //     }
+        // }
+        // wcHandHist[highestNonJ] += 1
+        // type1_switch-case_function_form(wcHandHist)
+
 	if J_in_hist {
 		switch {
 		case numUniqueCards == 1:
