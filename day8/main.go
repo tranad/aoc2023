@@ -45,12 +45,12 @@ func part1(startingNodeID string, nodeMap map[string]Node, instructions string) 
 	return numSteps
 }
 
+// Package for easy readout
 type Result struct {
 	id          string
 	zLocs       []int
 	zLocIDs     []string
-	cycleLen    int
-	cycleOffset int
+	zCycleLen    int
 }
 
 func part2(ch chan Result, wg *sync.WaitGroup, startingNodeID string, nodeMap map[string]Node, instructions string) {
@@ -83,16 +83,18 @@ func part2(ch chan Result, wg *sync.WaitGroup, startingNodeID string, nodeMap ma
 			}
 
 			// Record nodeHistory
-			_, visited := nodeHistory[currentNode]
-			if visited && len(zLocs) == 2 && numSteps >= len(instructions) {
-				cycleLen := numSteps
-				cycleOffset := nodeHistory[currentNode][0]
-				r := Result{startingNodeID, zLocs, zLocIDs, cycleLen, cycleOffset}
+                        // Don't actually need to record nodeHistroy. Just need
+                        // to find a __Z -> __Z cycle.
+			// _, visited := nodeHistory[currentNode]
+			if len(zLocs) == 2 {
+                                zCycleLen := zLocs[1] - zLocs[0]
+				r := Result{startingNodeID, zLocs, zLocIDs, zCycleLen}
 				notComplete = false
 				ch <- r
 				break
 			} else {
-				nodeHistory[currentNode] = append(nodeHistory[currentNode], numSteps)
+				// nodeHistory[currentNode] = append(nodeHistory[currentNode], numSteps)
+                                continue
 			}
 		}
 	}
@@ -138,8 +140,6 @@ func main() {
 	for i, line := range lines {
 		if i >= 2 {
 			node := parseLine(line)
-			// fmt.Println(node)
-			// nodes = append(nodes, node)
 			nodeMap[node.id] = node
 		}
 	}
@@ -163,7 +163,6 @@ func main() {
 
 	// Number of workers
 	numWorkers := len(startingNodeIDs)
-	// trueCount := 0
 	wg.Add(numWorkers)
 
 	// Start workers
@@ -180,7 +179,7 @@ func main() {
 	var cycles []int64
 	for result := range resultChan {
 		fmt.Printf("Worker %v\n", result)
-		cycles = append(cycles, int64(result.cycleLen-result.cycleOffset))
+		cycles = append(cycles, int64(result.zCycleLen))
 	}
 	ans2 := calculateLCM(cycles)
 	fmt.Printf("Part 2: %v\n", ans2)
@@ -188,6 +187,7 @@ func main() {
 	return
 }
 
+// ChatGPT LCM in go bc i'm not gonna write by hand.
 func gcd(a, b *big.Int) *big.Int {
 	for b.Sign() != 0 {
 		a, b = b, new(big.Int).Mod(a, b)
