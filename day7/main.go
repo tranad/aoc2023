@@ -62,20 +62,20 @@ func (ch CamelCardsHand) Type2() (string, int) {
 	// suppose J is an entry
 	_, J_in_hist := handHist["J"]
 
-        // Add J count to highest non-J count. Which is just the following
-        // which is long because idk how to do that in Go. Something like?
-        //
-        // wcHandHist = make(map[string]int)
-        // highestNonJ := ""
-        // cnt := 0
-        // for k,v := range handHist {
-        //     if k != "J" && v > cnt {
-        //         cnt = v
-        //         highestNonJ = k
-        //     }
-        // }
-        // wcHandHist[highestNonJ] += 1
-        // type1_switch-case_function_form(wcHandHist)
+	// Add J count to highest non-J count. Which is just the following
+	// which is long because idk how to do that in Go. Something like?
+	//
+	// wcHandHist = make(map[string]int)
+	// highestNonJ := ""
+	// cnt := 0
+	// for k,v := range handHist {
+	//     if k != "J" && v > cnt {
+	//         cnt = v
+	//         highestNonJ = k
+	//     }
+	// }
+	// wcHandHist[highestNonJ] += 1
+	// type1_switch-case_function_form(wcHandHist)
 
 	if J_in_hist {
 		switch {
@@ -281,70 +281,6 @@ func timer(name string) func() {
 	return func() {
 		fmt.Printf("%s took %v\n", name, time.Since(start))
 	}
-}
-func findMin(arr []int) int {
-	if len(arr) == 0 {
-		panic("Empty array")
-	}
-
-	min := arr[0]
-	for _, v := range arr {
-		if v < min {
-			min = v
-		}
-	}
-	return min
-}
-func findArgMin(arr []int) int {
-	if len(arr) == 0 {
-		panic("Empty array")
-	}
-
-	min := arr[0]
-	pos := 0
-	for i, v := range arr {
-		if v < min {
-			min = v
-			pos = i
-		}
-	}
-	return pos
-}
-
-// BySecondEntry is a custom type to sort tuples by the second entry
-type BySecondEntry [][]int
-
-// Len returns the length of the array
-func (a BySecondEntry) Len() int {
-	return len(a)
-}
-
-// Swap swaps the elements with indexes i and j
-func (a BySecondEntry) Swap(i, j int) {
-	a[i], a[j] = a[j], a[i]
-}
-
-// Less returns true if the tuple with index i should sort before the tuple with index j
-func (a BySecondEntry) Less(i, j int) bool {
-	return a[i][1] < a[j][1]
-}
-
-func splitIntoParagraphs(lines []string) (paragraphs [][]string) {
-	var tempParagraph []string
-	for i, line := range lines {
-		if len(line) != 0 {
-			tempParagraph = append(tempParagraph, line)
-		}
-		if i == len(lines)-1 {
-			paragraphs = append(paragraphs, tempParagraph)
-			break
-		}
-		if lines[i+1] == "" {
-			paragraphs = append(paragraphs, tempParagraph)
-			tempParagraph = nil
-		}
-	}
-	return
 }
 
 func convertStringOfNumbers(numberString string) (numbers []int) {

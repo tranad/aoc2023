@@ -26,15 +26,6 @@ func countWaysToBeatRecord(time int, dist int) int {
 	rt1 := (time_f64 + sqrt_discriminant) / 2
 	rt2 := (time_f64 - sqrt_discriminant) / 2
 	return int(math.Floor(rt1) - math.Ceil(rt2) + 1)
-
-	// count := 0
-	// for s := 1; s <= time - 1; s++ {
-	//     if (time - s) * s > dist {
-	//         fmt.Println(s)
-	//         count++
-	//     }
-	// }
-	// return count
 }
 
 func main() {
@@ -104,70 +95,6 @@ func timer(name string) func() {
 	return func() {
 		fmt.Printf("%s took %v\n", name, time.Since(start))
 	}
-}
-func findMin(arr []int) int {
-	if len(arr) == 0 {
-		panic("Empty array")
-	}
-
-	min := arr[0]
-	for _, v := range arr {
-		if v < min {
-			min = v
-		}
-	}
-	return min
-}
-func findArgMin(arr []int) int {
-	if len(arr) == 0 {
-		panic("Empty array")
-	}
-
-	min := arr[0]
-	pos := 0
-	for i, v := range arr {
-		if v < min {
-			min = v
-			pos = i
-		}
-	}
-	return pos
-}
-
-// BySecondEntry is a custom type to sort tuples by the second entry
-type BySecondEntry [][]int
-
-// Len returns the length of the array
-func (a BySecondEntry) Len() int {
-	return len(a)
-}
-
-// Swap swaps the elements with indexes i and j
-func (a BySecondEntry) Swap(i, j int) {
-	a[i], a[j] = a[j], a[i]
-}
-
-// Less returns true if the tuple with index i should sort before the tuple with index j
-func (a BySecondEntry) Less(i, j int) bool {
-	return a[i][1] < a[j][1]
-}
-
-func splitIntoParagraphs(lines []string) (paragraphs [][]string) {
-	var tempParagraph []string
-	for i, line := range lines {
-		if len(line) != 0 {
-			tempParagraph = append(tempParagraph, line)
-		}
-		if i == len(lines)-1 {
-			paragraphs = append(paragraphs, tempParagraph)
-			break
-		}
-		if lines[i+1] == "" {
-			paragraphs = append(paragraphs, tempParagraph)
-			tempParagraph = nil
-		}
-	}
-	return
 }
 
 func convertStringOfNumbers(numberString string) (numbers []int) {
