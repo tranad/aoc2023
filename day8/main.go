@@ -47,10 +47,10 @@ func part1(startingNodeID string, nodeMap map[string]Node, instructions string) 
 
 // Package for easy readout
 type Result struct {
-	id          string
-	zLocs       []int
-	zLocIDs     []string
-	zCycleLen    int
+	id        string
+	zLocs     []int
+	zLocIDs   []string
+	zCycleLen int
 }
 
 func part2(ch chan Result, wg *sync.WaitGroup, startingNodeID string, nodeMap map[string]Node, instructions string) {
@@ -83,18 +83,18 @@ func part2(ch chan Result, wg *sync.WaitGroup, startingNodeID string, nodeMap ma
 			}
 
 			// Record nodeHistory
-                        // Don't actually need to record nodeHistroy. Just need
-                        // to find a __Z -> __Z cycle.
+			// Don't actually need to record nodeHistroy. Just need
+			// to find a __Z -> __Z cycle.
 			// _, visited := nodeHistory[currentNode]
 			if len(zLocs) == 2 {
-                                zCycleLen := zLocs[1] - zLocs[0]
+				zCycleLen := zLocs[1] - zLocs[0]
 				r := Result{startingNodeID, zLocs, zLocIDs, zCycleLen}
 				notComplete = false
 				ch <- r
 				break
 			} else {
 				// nodeHistory[currentNode] = append(nodeHistory[currentNode], numSteps)
-                                continue
+				continue
 			}
 		}
 	}
